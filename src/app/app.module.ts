@@ -12,7 +12,6 @@ import { EncryptComponent } from './components/encrypt/encrypt.component';
 import { DecryptComponent } from './components/decrypt/decrypt.component';
 import { MenuPrincipalComponent } from './components/menu-principal/menu-principal.component';
 import { routes } from '../app/app.routes';
-
 @NgModule({
    declarations: [
       AppComponent,
