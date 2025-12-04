@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
+import { EncryptionService } from '../../services/encryption.service';
 
 @Component({
   selector: 'app-encrypt',
@@ -7,12 +8,30 @@ import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@
   standalone: false
 })
 export class EncryptComponent implements AfterViewInit {
+  
   @ViewChild('binaryCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
   private fontSize = 18;
   private columns!: number[];
   private width!: number;
   private height!: number;
+
+  text = '';
+  key = '';
+  encrypted = '';
+  copied: boolean = false;
+
+  constructor(private encryptionService: EncryptionService) {}
+
+  onEncrypt() {
+    this.encrypted = this.encryptionService.encrypt(this.text, this.key);
+    this.copied = false;
+  }
+
+  copyToClipboard() {
+    navigator.clipboard.writeText(this.encrypted);
+    this.copied = true;
+  }
 
   ngAfterViewInit(): void {
     this.initializeCanvas();

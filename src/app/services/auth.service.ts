@@ -23,7 +23,7 @@ export class AuthService {
     console.log('Sesion cerrada');
   }
 
-  liLogged(): boolean {
+  isLogged(): boolean {
     return !!localStorage.getItem('token');
   }
 }

@@ -60,24 +60,6 @@
                       </label>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-check p-3 h-100" style="background-color: rgba(5, 15, 5, 0.8); border: 2px solid #0FFF50; border-radius: 8px;">
-                      <input class="form-check-input" type="radio" name="algorithm" id="rsa">
-                      <label class="form-check-label w-100" for="rsa" style="color: #0FFF50;">
-                        <strong>RSA-2048</strong>
-                        <small class="d-block" style="color: #5FFF9F;">Clave asimétrica</small>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-check p-3 h-100" style="background-color: rgba(5, 15, 5, 0.8); border: 2px solid #0FFF50; border-radius: 8px;">
-                      <input class="form-check-input" type="radio" name="algorithm" id="chacha">
-                      <label class="form-check-label w-100" for="chacha" style="color: #0FFF50;">
-                        <strong>ChaCha20</strong>
-                        <small class="d-block" style="color: #5FFF9F;">Alta velocidad</small>
-                      </label>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -94,6 +76,7 @@
                   class="form-control" 
                   rows="6" 
                   placeholder="Ingresa el texto que deseas encriptar..."
+                  [(ngModel)]="text"
                   style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50; font-family: 'Courier New', monospace; resize: vertical;"></textarea>
                 <small class="d-block mt-2" style="color: #5FFF9F;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
@@ -112,11 +95,12 @@
                   Clave de Encriptación (opcional)
                 </label>
                 <div class="input-group">
-                  <input 
-                    type="password" 
-                    class="form-control" 
-                    placeholder="Ingresa una clave segura..."
-                    style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50;">
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  placeholder="Ingresa una clave segura..."
+                  [(ngModel)]="key"
+                  style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50;">
                   <button class="btn" type="button" style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -128,7 +112,9 @@
 
               <!-- Action Buttons -->
               <div class="d-grid gap-3 mb-4">
-                <button class="btn btn-lg fw-bold py-3" style="background-color: #0FFF50; color: #001a00; border: none; box-shadow: 0 0 20px rgba(15, 255, 80, 0.5);">
+                <button class="btn btn-lg fw-bold py-3"
+                        style="background-color: #0FFF50; color: #001a00; border: none; box-shadow: 0 0 20px rgba(15, 255, 80, 0.5);"
+                        (click)="onEncrypt()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-2" viewBox="0 0 16 16">
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
                   </svg>
@@ -146,21 +132,22 @@
                 </label>
                 <div class="p-3 position-relative" style="background-color: rgba(5, 15, 5, 0.8); border: 2px solid #0FFF50; border-radius: 8px; min-height: 120px;">
                   <code class="d-block" style="color: #0FFF50; font-size: 14px; word-break: break-all; white-space: pre-wrap;">
-                    El texto encriptado aparecerá aquí...
+                    {{ encrypted || 'El texto encriptado aparecerá aquí...' }}
                   </code>
-                  <button class="btn btn-sm position-absolute top-0 end-0 m-2" style="background-color: rgba(10, 25, 10, 0.9); color: #0FFF50; border: 1px solid #0FFF50;">
+                  <button class="btn btn-sm position-absolute top-0 end-0 m-2"
+                          style="background-color: rgba(10, 25, 10, 0.9); color: #0FFF50; border: 1px solid #0FFF50;"
+                          (click)="copyToClipboard()" [disabled]="!encrypted">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                       <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                       <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                     </svg>
                     Copiar
                   </button>
+                  <div *ngIf="copied" style="color: #0FFF50; font-size: 12px;">¡Copiado al portapapeles!</div>
                 </div>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
+import { EncryptionService } from '../../services/encryption.service';
 
 @Component({
   selector: 'app-decrypt',
@@ -14,6 +15,24 @@ export class DecryptComponent implements  AfterViewInit {
   private columns!: number[];
   private width!: number;
   private height!: number;
+
+  encrypted = '';
+  key = '';
+  decrypted = '';
+  error = '';
+
+  constructor(private encryptionService: EncryptionService) {}
+
+  decrypt() {
+    const result = this.encryptionService.decrypt(this.encrypted, this.key);
+    if(result) {
+      this.decrypted = result;
+      this.error = '';
+    } else {
+      this.decrypted = '';
+      this.error = 'Clave incorrecta o texto invalido.';
+    }
+  }
 
   ngAfterViewInit(): void {
     this.initializeCanvas();
