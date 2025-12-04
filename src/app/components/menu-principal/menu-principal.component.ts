@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -7,6 +9,17 @@ import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@
   standalone: false
 })
 export class MenuPrincipalComponent implements AfterViewInit {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
  @ViewChild('binaryCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
   private fontSize = 18;

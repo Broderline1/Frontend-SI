@@ -64,6 +64,10 @@ export class LoginComponent implements AfterViewInit {
     requestAnimationFrame(() => this.draw());
   }
 
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
   onSubmit() {
     this.AuthService.login({ email: this.email, password: this.password }).subscribe({
       next: (res) => {
