@@ -14,6 +14,10 @@ export class AuthService {
     return this.http.post<any>(`${this.backendUrl}/auth/login`, credentials);
   }
 
+  register(data: { name: string; email: string; password: string }): Observable<any> {
+    return this.http.post<any>(`${this.backendUrl}/auth/register`, data);
+  }
+
   logout() {
     localStorage.removeItem('token');
     console.log('Sesion cerrada');
