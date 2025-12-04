@@ -20,6 +20,8 @@ export class DecryptComponent implements  AfterViewInit {
   key = '';
   decrypted = '';
   error = '';
+  copied = false;
+  showKey = false;
 
   constructor(private encryptionService: EncryptionService) {}
 
@@ -28,9 +30,23 @@ export class DecryptComponent implements  AfterViewInit {
     if(result) {
       this.decrypted = result;
       this.error = '';
+      this.copied = false;
     } else {
       this.decrypted = '';
       this.error = 'Clave incorrecta o texto invalido.';
+      this.copied = false;
+    }
+  }
+
+  toggleShowKey() {
+    this.showKey = !this.showKey;
+  }
+
+  copyToClipboard() {
+    if (this.decrypted) {
+      navigator.clipboard.writeText(this.decrypted);
+      this.copied = true;
+      setTimeout(() => this.copied = false, 2000);
     }
   }
 

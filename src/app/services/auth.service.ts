@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../app/environments/environment";
 
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private backendUrl = environment.backendUrl;
@@ -19,11 +18,15 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     console.log('Sesion cerrada');
   }
 
   isLogged(): boolean {
-    return !!localStorage.getItem('token');
+    return !!sessionStorage.getItem('token');
+  }
+
+  getToken(): string | null {
+    return sessionStorage.getItem('token');
   }
 }

@@ -20,6 +20,7 @@ export class EncryptComponent implements AfterViewInit {
   key = '';
   encrypted = '';
   copied: boolean = false;
+  showKey = false;
 
   constructor(private encryptionService: EncryptionService) {}
 
@@ -28,6 +29,10 @@ export class EncryptComponent implements AfterViewInit {
     this.copied = false;
   }
 
+  toggleShowKey() {
+    this.showKey = !this.showKey;
+  }
+  
   copyToClipboard() {
     navigator.clipboard.writeText(this.encrypted);
     this.copied = true;

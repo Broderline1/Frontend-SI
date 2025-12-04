@@ -15,7 +15,6 @@ export const routes: Routes = [
    { path: 'encrypt', component: EncryptComponent, canActivate: [AuthGuard] },
    { path: 'decrypt', component: DecryptComponent, canActivate: [AuthGuard] },
    { path: 'menu-principal', component: MenuPrincipalComponent, canActivate: [AuthGuard] },
-   
-   { path: '', redirectTo: '/login', pathMatch: 'full' },
+   { path: '', component: MenuPrincipalComponent, canActivate: [AuthGuard] },
    { path: '**', redirectTo: ''}
 ];

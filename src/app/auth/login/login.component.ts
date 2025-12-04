@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: false
 })
 export class LoginComponent implements AfterViewInit {
+  
   email: string = '';
   password: string = '';
   error: string = '';
@@ -71,7 +72,7 @@ export class LoginComponent implements AfterViewInit {
   onSubmit() {
     this.AuthService.login({ email: this.email, password: this.password }).subscribe({
       next: (res) => {
-        localStorage.setItem('token', res.token);
+        sessionStorage.setItem('token', res.token);
         this.router.navigate(['/menu-principal']);
       },
       error: () => {
