@@ -1,20 +1,21 @@
-<div class="min-vh-100 d-flex align-items-center justify-content-center bg-dark position-relative overflow-hidden">
-  <!-- Efecto de fondo con líneas de código -->
+<div class="min-vh-100 d-flex align-items-center justify-content-center position-relative overflow-hidden">
+  <!-- Canvas animado de fondo -->
   <canvas #binaryCanvas class="binary-canvas"></canvas>
-  <div class="container">
+  
+  <div class="container position-relative" style="z-index: 1;">
     <div class="row justify-content-center">
       <div class="col-11 col-sm-10 col-md-8 col-lg-5 col-xl-4">
-        <div class="card bg-dark border-success shadow-lg position-relative" style="border-width: 2px;">
+        <div class="card shadow-lg position-relative" style="background-color: rgba(10, 25, 10, 0.95); border: 2px solid #0FFF50;">
           <!-- Header con icono -->
-          <div class="card-header bg-transparent border-success text-center py-4">
+          <div class="card-header text-center py-4" style="background-color: rgba(5, 15, 5, 0.8); border-bottom: 2px solid #0FFF50;">
             <div class="mb-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#0FFF50" viewBox="0 0 16 16">
                 <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
                 <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z"/>
               </svg>
             </div>
-            <h3 class="text-success mb-1 fw-bold">SISTEMA SEGURO</h3>
-            <p class="text-success mb-0 small opacity-75">Autenticación requerida</p>
+            <h3 class="mb-1 fw-bold" style="color: #0FFF50;">SISTEMA SEGURO</h3>
+            <p class="mb-0 small" style="color: #5FFF9F;">Autenticación requerida</p>
           </div>
 
           <!-- Formulario -->
@@ -22,7 +23,7 @@
             <form (ngSubmit)="onSubmit()">
               <!-- Email -->
               <div class="mb-4">
-                <label class="form-label text-success small mb-2">
+                <label class="form-label small mb-2" style="color: #0FFF50;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                   </svg>
@@ -30,17 +31,17 @@
                 </label>
                 <input 
                   type="email" 
-                  class="form-control bg-dark text-success border-success" 
+                  class="form-control" 
                   [(ngModel)]="email" 
                   name="email" 
                   placeholder="usuario@dominio.com" 
                   required
-                  style="box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);">
+                  style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50; box-shadow: 0 0 10px rgba(15, 255, 80, 1);">
               </div>
 
               <!-- Password -->
               <div class="mb-4">
-                <label class="form-label text-success small mb-2">
+                <label class="form-label small mb-2" style="color: #0FFF50;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
                   </svg>
@@ -48,16 +49,16 @@
                 </label>
                 <input 
                   type="password" 
-                  class="form-control bg-dark text-success border-success" 
+                  class="form-control" 
                   [(ngModel)]="password" 
                   name="password" 
                   placeholder="••••••••" 
                   required
-                  style="box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);">
+                  style="background-color: rgba(5, 15, 5, 1); color: #0FFF50; border: 2px solid #0FFF50; box-shadow: 0 0 10px rgba(15, 255, 80, 1);">
               </div>
 
               <!-- Error Message -->
-              <div *ngIf="error" class="alert alert-danger bg-transparent border-danger text-danger small py-2 mb-3" role="alert">
+              <div *ngIf="error" class="alert small py-2 mb-3" role="alert" style="background-color: rgba(40, 5, 5, 0.8); border: 2px solid #ff4444; color: #ff6666;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                   <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                 </svg>
@@ -67,8 +68,8 @@
               <!-- Submit Button -->
               <button 
                 type="submit" 
-                class="btn btn-success w-100 fw-bold py-2 mb-3 position-relative overflow-hidden"
-                style="box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); transition: all 0.3s;">
+                class="btn w-100 fw-bold py-2 mb-3 position-relative overflow-hidden"
+                style="background-color: #0FFF50; color: #001a00; border: none; box-shadow: 0 0 20px rgba(15, 255, 80, 0.5);">
                 <span class="position-relative">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
@@ -80,14 +81,14 @@
 
               <!-- Footer links -->
               <div class="text-center">
-                <button (click)="goToRegister()" class="btn btn-link text-success text-decoration-none small p-0">Crear cuenta</button>
+                <button (click)="goToRegister()" class="btn btn-link text-decoration-none small p-0" style="color: #0FFF50; font-weight: bold;">Crear cuenta</button>
               </div>
             </form>
           </div>
 
           <!-- Card footer -->
-          <div class="card-footer bg-transparent border-success text-center py-3">
-            <small class="text-success opacity-75">
+          <div class="card-footer text-center py-3" style="background-color: rgba(5, 15, 5, 0.8); border-top: 2px solid #0FFF50;">
+            <small style="color: #5FFF9F;">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
               </svg>
@@ -98,9 +99,26 @@
 
         <!-- Texto adicional -->
         <div class="text-center mt-3">
-          <small class="text-success opacity-50">© 2025 Sistema de Encriptado y Ciberseguridad</small>
+          <small style="color: #5FFF9F;">© 2025 Sistema de Encriptado y Ciberseguridad</small>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+.binary-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  background: #000;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(15, 255, 1) !important;
+}
+</style>
