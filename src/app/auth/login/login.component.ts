@@ -14,6 +14,33 @@ export class LoginComponent implements AfterViewInit {
   password: string = '';
   error: string = '';
 
+  emailError: string = '';
+  passwordError: string = '';
+  serverError: string = '';
+
+  validateFields(): boolean {
+    this.emailError = '';
+    this.passwordError = '';
+    this.serverError = '';
+
+    let valid = true;
+
+    if (!this.email) {
+      this.emailError = 'El correo es obligatorio';
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+      this.emailError = 'Correo electrónico inválido';
+      valid = false;
+    }
+
+    if (!this.password) {
+      this.passwordError = 'La contraseña es obligatoria';
+      valid = false;
+    }
+
+    return valid;
+  }
+
   @ViewChild('binaryCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
   private fontSize = 18;
@@ -78,6 +105,24 @@ export class LoginComponent implements AfterViewInit {
       error: () => {
         this.error = 'Credenciales incorrectas';
       },
+    });
+
+    if (!this.validateFields()) return;
+
+    this.AuthService.login({ email: this.email, password: this.password }).subscribe({
+      next: (res) => {
+        sessionStorage.setItem('token', res.token);
+        this.router.navigate(['/menu-principal']);
+      },
+      error: (err) => {
+        if (err.error?.message === 'USER_NOT_FOUND') {
+          this.serverError = 'El usuario no existe';
+        } else if (err.error?.message === 'INVALID_PASSWORD') {
+          this.serverError = 'La contraseña es incorrecta';
+        } else {
+          this.serverError = 'Error al iniciar sesión';
+        }
+      }
     });
   }
 }

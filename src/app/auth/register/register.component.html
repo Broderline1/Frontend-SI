@@ -32,13 +32,15 @@
                     Nombre de Usuario
                   </label>
                   <input 
-                    type="text" 
-                    class="form-control" 
-                    [(ngModel)]="username" 
-                    name="username" 
-                    placeholder="Usuario123" 
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="username"
+                    name="username"
+                    placeholder="Usuario123"
                     required
+                    [ngClass]="{'input-error': usernameError}"
                     style="background-color: rgba(5, 15, 5, 0.8); color: #0FFF50; border: 2px solid #0FFF50;">
+                  <div *ngIf="usernameError" class="error-text">{{ usernameError }}</div>
                 </div>
 
                 <!-- Email -->

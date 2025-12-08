@@ -15,6 +15,48 @@ export class RegisterComponent implements AfterViewInit {
   error: string = '';
   success: string = '';
 
+  usernameError: string = '';
+  emailError: string = '';
+  passwordError: string = '';
+
+  validateFields(): boolean {
+    this.usernameError = '';
+    this.emailError = '';
+    this.passwordError = '';
+
+    let valid = true;
+
+    if (!this.username) {
+      this.usernameError = 'El nombre de usuario es obligatorio';
+      valid = false;
+    }
+
+    if (!this.email) {
+      this.emailError = 'El correo es obligatorio';
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+      this.emailError = 'El correo no tiene un formato válido';
+      valid = false;
+    }
+
+    if (!this.password) {
+      this.passwordError = 'La contraseña es obligatoria';
+      valid = false;
+    } else if (this.password.length < 8) {
+      this.passwordError = 'Mínimo 8 caracteres';
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  isPasswordStrong: boolean = false;
+
+  checkPassword() {
+    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    this.isPasswordStrong = strongRegex.test(this.password);
+  }
+
   @ViewChild('binaryCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   private ctx!: CanvasRenderingContext2D;
   private fontSize = 18;
@@ -79,5 +121,28 @@ export class RegisterComponent implements AfterViewInit {
         this.success = '';
       }
     })
+
+    if (!this.username || !this.email || !this.password || !this.isPasswordStrong) {
+      this.error = "Revisa los campos, hay errores.";
+      return;
+    }
+
+    this.authService.register({
+      name: this.username,
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: () => {
+        this.success = 'Registro exitoso. Redirigiendo al login...';
+        this.error = '';
+        setTimeout(() => this.router.navigate(['/login']), 2000);
+      },
+      error: (err) => {
+        this.error = err.error?.message || 'Error en el registro';
+        this.success = '';
+      }
+    });
+
+     if (!this.validateFields()) return;
   }
 }
