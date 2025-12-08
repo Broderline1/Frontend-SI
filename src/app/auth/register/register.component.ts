@@ -18,6 +18,7 @@ export class RegisterComponent implements AfterViewInit {
   usernameError: string = '';
   emailError: string = '';
   passwordError: string = '';
+  passwordStrengthMessage: string = '';
 
   validateFields(): boolean {
     this.usernameError = '';
@@ -52,9 +53,34 @@ export class RegisterComponent implements AfterViewInit {
 
   isPasswordStrong: boolean = false;
 
-  checkPassword() {
-    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    this.isPasswordStrong = strongRegex.test(this.password);
+checkPassword() {
+    const lengthValid = this.password.length >= 8;
+    const hasLower = /[a-z]/.test(this.password);
+    const hasUpper = /[A-Z]/.test(this.password);
+    const hasNumber = /\d/.test(this.password);
+    const hasSpecial = /[\W_]/.test(this.password);
+
+    if (!this.password) {
+      this.passwordStrengthMessage = '';
+      this.isPasswordStrong = false;
+      return;
+    }
+
+    let messages = [];
+
+    if (!lengthValid) messages.push("• Mínimo 8 caracteres");
+    if (!hasLower) messages.push("• Una letra minúscula");
+    if (!hasUpper) messages.push("• Una letra mayúscula");
+    if (!hasNumber) messages.push("• Un número");
+    if (!hasSpecial) messages.push("• Un símbolo especial (!@#$%-_ etc)");
+
+    if (messages.length === 0) {
+      this.passwordStrengthMessage = "Contraseña fuerte ✔";
+      this.isPasswordStrong = true;
+    } else {
+      this.passwordStrengthMessage = "Te falta:\n" + messages.join("\n");
+      this.isPasswordStrong = false;
+    }
   }
 
   @ViewChild('binaryCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
@@ -104,29 +130,21 @@ export class RegisterComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    this.authService.register({
-      name: this.username,
-      email: this.email,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        this.success = 'Registro exitoso. Redirigiendo al login...';
-        this.error = '';
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 2000);
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Error en el registro';
-        this.success = '';
-      }
-    })
+    this.error = '';
+    this.success = '';
 
-    if (!this.username || !this.email || !this.password || !this.isPasswordStrong) {
-      this.error = "Revisa los campos, hay errores.";
+    // Validación de fuerza de contraseña
+    if (!this.isPasswordStrong) {
+      this.error = "La contraseña debe ser más fuerte.";
       return;
     }
 
+    if (!this.isPasswordStrong) {
+      this.error = "La contraseña debe ser más fuerte.";
+      return;
+    }
+
+    // 2️⃣ Hacer registro SOLO si pasó validaciones
     this.authService.register({
       name: this.username,
       email: this.email,
@@ -142,7 +160,5 @@ export class RegisterComponent implements AfterViewInit {
         this.success = '';
       }
     });
-
-     if (!this.validateFields()) return;
   }
 }
